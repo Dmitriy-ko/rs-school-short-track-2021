@@ -15,17 +15,22 @@
  */
   
 function renameFiles(names) {
-  const arr = [...names];
-  for (let i = 0; i < arr.length; i++) {
-    let count = 1;
-    for (let j = i + 1; j < arr.length; j++) {
-      if (arr[i] === arr[j]) {
-        arr[j] = `${arr[j]}(${count})`;
-        count++;
-      }
+  const result = [];
+  const arr = [];
+
+  names.forEach((el) => {
+    arr.push(el);
+    const count = result.filter((x) => x === el).length;
+    const count2 = arr.filter((x) => x === el).length;
+    if (count === count2) {
+      result.push(`${el}(${count})`);
+    } else if (count > 0) {
+      result.push(`${el}(${count2 - count})`);
+    } else {
+      result.push(el);
     }
-  }
-  return arr;
+  });
+  return result;
 }
 
 module.exports = renameFiles;
